@@ -184,7 +184,7 @@ which are described below:
 to convert special characters such as & to `&amp;` and < to `&lt;` etc. 
 Spaces in URLs always get converted to %20, regardless of this parameter.
 
-- $`tls` (default = self::TLS_IGNORE) – defines whether the output URL should be http or https 
+- `$tls` (default = self::TLS_IGNORE) – defines whether the output URL should be http or https
 or just the same as the current page. There are 3 possible values:
    - Route::TLS_IGNORE (value 0) – if an absolute URL is requested, then the scheme (http or https) is set to the same as the current HTTP request
    - Route::TLS_FORCE (value 1) – the scheme is set to https and an absolute URL is returned (regardless of the setting of the `$absolute` parameter).
