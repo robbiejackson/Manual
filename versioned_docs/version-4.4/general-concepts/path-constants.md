@@ -22,7 +22,6 @@ The fixed path constants are:
 | Path Constant       | Description                             |
 | ------------------- | --------------------------------------- |
 | JPATH_ROOT          | Root directory of the Joomla instance |
-| JPATH_PUBLIC        | Root directory of the web-accessible section of the file system (see note 1 below) |
 | ------------------- |   |
 | JPATH_SITE          | Path to the Joomla site - where the front-end index.php is located |
 | JPATH_ADMINISTRATOR | Path to the Joomla administrator - where the administrator index.php is located |
@@ -39,12 +38,7 @@ The fixed path constants are:
 
 Notes
 
-1. As an example, JPATH_PUBLIC would differ from JPATH_ROOT if the Joomla instance is configured 
-so that the files which are publicly accessible from the web (in /media, /images, etc)
-are below a subdirectory (eg /public) which is separated from the Joomla libraries and other code files. 
-This is considered as more secure because code files aren't accessible via the web. 
-
-2. The installation folder (/installation) contains the code used to install Joomla. 
+1. The installation folder (/installation) contains the code used to install Joomla. 
 Joomla deletes this folder after installation.
 
 The following path constants vary depending upon the context
