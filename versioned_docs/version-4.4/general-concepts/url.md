@@ -19,7 +19,7 @@ to experiment.
 
 ## Getting the Current URL
 
-To get the URL of the current webpage do: 
+To get the URL of the current webpage do:
 
 ```php
 use Joomla\CMS\Uri\Uri;
