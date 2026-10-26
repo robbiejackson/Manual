@@ -152,4 +152,7 @@ You can define a custom error message by specifying the data-validation-text att
     ... />
 ```
 
+Note that there is an issue with specifying a language constant for the data-validation-text;
+see [data-validation-text fix](https://github.com/joomla/joomla-cms/pull/48417).
+
 **This applies to the client-side validation only! It has no effect on the server-side validation!**
