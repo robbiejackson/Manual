@@ -189,7 +189,7 @@ COM_EXAMPLE_INVALID_LONGITUDE="Invalid longitude - please enter a value between 
 
 The [Client-side Validation documentation](../../../general-concepts/forms/client-side-validation.md)
 describes what needs to be done to implement client-side validation in the browser.
-In general, this doesn't need to be as rigorous as server-side validation,
+In general, this doesn't need to be as extensive as server-side validation,
 because often the HTML input elements don't permit the user to enter invalid data. 
 
 For this step we will implement the validation of the latitude and longitude fields,

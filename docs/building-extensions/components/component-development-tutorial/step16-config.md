@@ -50,9 +50,11 @@ Here's what we will do to implement component configuration for com_example:
 
 2. Add the necessary language constants
 
-3. Display a button on the landmarks view to provide a short cut to accessing our component config
+3. Set the default landmarks view
 
-4. Using an install script, set the default zoom value to 10
+4. Display a button on the landmarks view to provide a short cut to accessing our component config
+
+5. Using an install script, set the default zoom value to 10
 
 ### Config.xml File
 
@@ -159,6 +161,37 @@ COM_EXAMPLE_CONFIG_DEFAULT_ZOOM_DESC="Default zoom level for map"
 
 The file includes the 2 new language constants (COM_EXAMPLE_LANDMARK_ZOOM_LABEL and COM_EXAMPLE_LANDMARK_ZOOM_DESC)
 for the zoom override as well, which will be set in our admin edit form.
+
+### Default Landmarks View
+
+When an administrator goes into Global Configuration, and then Landmarks component configuration,
+and then selects Save & Close or Close, then Joomla redirects the administrator to 
+
+```
+<joomla instance>/administrator/index.php?option=com_example
+```
+
+There's no view defined here, so we need to set this in the DisplayController:
+
+```php title="administrator/components/com_example/src/Controller/DisplayController"
+<?php
+
+namespace My\Component\Example\Administrator\Controller;
+
+\defined('_JEXEC') or die;
+
+use Joomla\CMS\MVC\Controller\BaseController;
+
+class DisplayController extends BaseController {
+
+  // highlight-next-line
+    protected $default_view = 'landmarks';
+
+    public function display($cachable = false, $urlparams = array()) {
+        return parent::display();
+    }
+}
+```
 
 ### Preferences Button
 
