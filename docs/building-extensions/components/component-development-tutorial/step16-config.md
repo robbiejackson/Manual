@@ -241,8 +241,9 @@ As described in the [install script documentation](../../install-update/installa
 there are two forms of the script file, and in this step we use the second:
 
 Unlike the SQL update files, which run only on a single install and then never again,
-the install script is run every time the component is installed,
-so we have to take care not to change any existing configuration which an administrator may have set. 
+the install script is run every time the component is installed/updated.
+When this is performed, the script run the setDefaultConfig function, 
+and we have to take care not to change any existing configuration which an administrator may have set. 
 
 ```php title="com_example/script.php"
 <?php
@@ -283,6 +284,7 @@ return new class () implements ServiceProviderInterface {
 
         public function update(InstallerAdapter $parent): bool
         {
+          $this->setDefaultConfig($this->db);
           $this->app->enqueueMessage('Successfully updated.');
 
           return true;
@@ -290,6 +292,7 @@ return new class () implements ServiceProviderInterface {
 
         public function uninstall(InstallerAdapter $parent): bool
         {
+          $this->setDefaultConfig($this->db);
           $this->app->enqueueMessage('Successfully uninstalled.');
 
           return true;
@@ -302,7 +305,6 @@ return new class () implements ServiceProviderInterface {
 
         public function postflight(string $type, InstallerAdapter $parent): bool
         {
-          $this->setDefaultConfig($this->db);
           return true;
         }
 
