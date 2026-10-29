@@ -598,7 +598,8 @@ but then will send an empty value for that field to the server).
 ## Challenge
 
 If your Joomla version includes the [data-validation-text fix](https://github.com/joomla/joomla-cms/pull/48417)
-then try changing the code to use language strings for the client-side validation error messages. 
+then try changing the code to use language strings for the client-side validation error messages,
+by setting the `validationtext=` attribute, as proposed in that pull request.
 
 ## For Further Study
 
