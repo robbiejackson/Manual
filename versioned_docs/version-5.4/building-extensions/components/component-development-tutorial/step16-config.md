@@ -50,9 +50,11 @@ Here's what we will do to implement component configuration for com_example:
 
 2. Add the necessary language constants
 
-3. Display a button on the landmarks view to provide a short cut to accessing our component config
+3. Set the default landmarks view
 
-4. Using an install script, set the default zoom value to 10
+4. Display a button on the landmarks view to provide a short cut to accessing our component config
+
+5. Using an install script, set the default zoom value to 10
 
 ### Config.xml File
 
@@ -160,6 +162,37 @@ COM_EXAMPLE_CONFIG_DEFAULT_ZOOM_DESC="Default zoom level for map"
 The file includes the 2 new language constants (COM_EXAMPLE_LANDMARK_ZOOM_LABEL and COM_EXAMPLE_LANDMARK_ZOOM_DESC)
 for the zoom override as well, which will be set in our admin edit form.
 
+### Default Landmarks View
+
+When an administrator goes into Global Configuration, and then Landmarks component configuration,
+and then selects Save & Close or Close, then Joomla redirects the administrator to 
+
+```
+<joomla instance>/administrator/index.php?option=com_example
+```
+
+There's no view defined here, so we need to set this in the DisplayController:
+
+```php title="administrator/components/com_example/src/Controller/DisplayController"
+<?php
+
+namespace My\Component\Example\Administrator\Controller;
+
+\defined('_JEXEC') or die;
+
+use Joomla\CMS\MVC\Controller\BaseController;
+
+class DisplayController extends BaseController {
+
+  // highlight-next-line
+    protected $default_view = 'landmarks';
+
+    public function display($cachable = false, $urlparams = array()) {
+        return parent::display();
+    }
+}
+```
+
 ### Preferences Button
 
 We add a button on the Landmarks view which will give an administrator a short cut to the configuration parameters.
@@ -208,8 +241,9 @@ As described in the [install script documentation](../../install-update/installa
 there are two forms of the script file, and in this step we use the second:
 
 Unlike the SQL update files, which run only on a single install and then never again,
-the install script is run every time the component is installed,
-so we have to take care not to change any existing configuration which an administrator may have set. 
+the install script is run every time the component is installed/updated.
+When this is performed, the script run the setDefaultConfig function, 
+and we have to take care not to change any existing configuration which an administrator may have set. 
 
 ```php title="com_example/script.php"
 <?php
@@ -250,6 +284,7 @@ return new class () implements ServiceProviderInterface {
 
         public function update(InstallerAdapter $parent): bool
         {
+          $this->setDefaultConfig($this->db);
           $this->app->enqueueMessage('Successfully updated.');
 
           return true;
@@ -257,6 +292,7 @@ return new class () implements ServiceProviderInterface {
 
         public function uninstall(InstallerAdapter $parent): bool
         {
+          $this->setDefaultConfig($this->db);
           $this->app->enqueueMessage('Successfully uninstalled.');
 
           return true;
@@ -269,7 +305,6 @@ return new class () implements ServiceProviderInterface {
 
         public function postflight(string $type, InstallerAdapter $parent): bool
         {
-          $this->setDefaultConfig($this->db);
           return true;
         }
 
